@@ -6,13 +6,9 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const supabase = await createClient();
-  const todoId = parseInt(params.id);
+  const todoId = params.id;
 
   console.log("Todo ID:", todoId);
-
-  if (isNaN(todoId)) {
-    return NextResponse.json({ error: "Invalid Todo ID" }, { status: 400 });
-  }
 
   const { data, error } = await supabase
     .from("todos")
@@ -32,21 +28,17 @@ export async function GET(
   return NextResponse.json(data);
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   const supabase = await createClient();
-  const data = await request.json();
 
-  const todoId = data.id;
-  console.log("Attempting to delete Todo with ID:", todoId);
+  const todoId = params.id;
 
   console.log("\n\n ok 1 \n\n");
 
   try {
-    if (isNaN(todoId)) {
-      console.error("Invalid Todo ID:", todoId);
-      return NextResponse.json({ error: "Invalid Todo ID" }, { status: 400 });
-    }
-
     console.log("\n\n ok 2 \n\n");
 
     const { data, error } = await supabase

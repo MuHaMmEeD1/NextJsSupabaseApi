@@ -6,20 +6,14 @@ const TodoDeleteButton = ({ todo }) => {
       onClick={async (e) => {
         e.preventDefault();
 
-        const res = await fetch(
-          `http://localhost:3000/api/todos/${todo.id}`,
-          { id: todo.id },
-          {
-            method: "DELETE",
-          }
-        );
+        const res = await fetch(`http://localhost:3000/api/todos/${todo.id}`, {
+          method: "DELETE",
+        });
 
         console.dir(res);
 
         if (res.ok) {
           alert("Todo deleted!");
-
-          window.location.reload();
         } else {
           alert("Error deleting todo");
         }
