@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddTodo = () => {
   const [title, setTitle] = useState("");
@@ -18,11 +19,9 @@ const AddTodo = () => {
     });
 
     if (res.ok) {
-      setTitle("");
-      setDescription("");
-      alert("Todo added!");
+      toast.success("Success added todo");
     } else {
-      alert("Error adding todo");
+      toast.error("Errore don't added todo");
     }
   };
 
@@ -59,6 +58,19 @@ const AddTodo = () => {
           Add Todo
         </button>
       </form>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

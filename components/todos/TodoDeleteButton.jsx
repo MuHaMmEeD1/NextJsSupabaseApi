@@ -1,6 +1,6 @@
 "use client";
 
-const TodoDeleteButton = ({ todo }) => {
+const TodoDeleteButton = ({ todo, toast }) => {
   return (
     <button
       onClick={async (e) => {
@@ -13,9 +13,9 @@ const TodoDeleteButton = ({ todo }) => {
         console.dir(res);
 
         if (res.ok) {
-          alert("Todo deleted!");
+          toast.success("Success deleted todo");
         } else {
-          alert("Error deleting todo");
+          toast.error("Errore don't deleted todo");
         }
       }}
     >

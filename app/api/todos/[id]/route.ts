@@ -6,14 +6,14 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const supabase = await createClient();
-  const todoId = params.id;
+  const { id } = await params;
 
-  console.log("Todo ID:", todoId);
+  console.log("Todo ID:", id);
 
   const { data, error } = await supabase
     .from("todos")
     .select("*")
-    .eq("id", todoId)
+    .eq("id", id)
     .maybeSingle();
 
   if (error) {
@@ -34,19 +34,10 @@ export async function DELETE(
 ) {
   const supabase = await createClient();
 
-  const todoId = params.id;
-
-  console.log("\n\n ok 1 \n\n");
+  const { id } = await params;
 
   try {
-    console.log("\n\n ok 2 \n\n");
-
-    const { data, error } = await supabase
-      .from("todos")
-      .delete()
-      .eq("id", todoId);
-
-    console.log("\n\n ok 3 \n\n");
+    const { data, error } = await supabase.from("todos").delete().eq("id", id);
 
     if (error) {
       console.error("Supabase delete error:", error.message);
@@ -69,12 +60,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const supabase = await createClient();
-  const todoId = parseInt(params.id);
-
-  if (isNaN(todoId)) {
-    console.error("Invalid Todo ID:", todoId);
-    return NextResponse.json({ error: "Invalid Todo ID" }, { status: 400 });
-  }
+  const { id } = await params;
 
   try {
     const requestData = await request.json();
@@ -99,7 +85,7 @@ export async function PUT(
         title: requestData.title ?? undefined,
         description: requestData.description ?? undefined,
       })
-      .eq("id", todoId);
+      .eq("id", id);
 
     if (error) {
       console.error("Supabase error:", error.message);

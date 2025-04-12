@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
 
 const EditTodo = () => {
   const { id } = useParams();
@@ -39,12 +40,10 @@ const EditTodo = () => {
       },
       body: JSON.stringify({ title, description, completed }),
     });
-
     if (res.ok) {
-      alert("Todo updated!");
-      router.push("/todos");
+      toast.success("Success updated todo");
     } else {
-      alert("Error updating todo");
+      toast.error("Errore don't updated todo");
     }
   };
 
@@ -93,6 +92,19 @@ const EditTodo = () => {
           Update Todo
         </button>
       </form>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

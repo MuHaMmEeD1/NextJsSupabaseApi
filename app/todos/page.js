@@ -1,6 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import TodoDeleteButton from "../../components/todos/TodoDeleteButton";
+  import { ToastContainer, toast } from "react-toastify";
+
 
 const Todos = async () => {
   const res = await fetch("http://localhost:3000/api/todos");
@@ -30,10 +32,23 @@ const Todos = async () => {
               </p>
             </Link>
 
-            <TodoDeleteButton todo={todo}></TodoDeleteButton>
+            <TodoDeleteButton todo={todo} toast={toast}></TodoDeleteButton>
           </li>
         ))}
       </ul>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
